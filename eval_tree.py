@@ -1,6 +1,6 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
-from parse_tree import parse_tree, Special
+from parse_tree import parse_tree, Special, Func
 
 def canon_len(lst):
 	length = 0
@@ -71,28 +71,37 @@ class SpecialMethod(object):
 		s = node.args[0]
 		t = node.stack
 		while True:
-			if not s:
-				if isinstance(t[0], int):
-					return 1
-				return t[0]
-			if isinstance(s[0], int):
+			if s and isinstance(s[0], int):
 				j = s[0]
 				for i in t:
 					j -= i if isinstance(i, int) else 1
 					if j < 0:
-						t = i if isinstance(i, list) else 1
+						if isinstance(i, list):
+							t = i
+						else: 
+							return 1
 						break
 				s = s[1:]
-				if not s:
-					return eval_tree(t)
 			else:
-				s = s[0]
 				t = t[0]
+				if s:
+					s = s[0]
+				else:
+					break
+		if isinstance(t, int):
+			return 1
+		if isinstance(t, Special):
+			if t.name == 'subst': #oops
+				return []
+			return eval_tree(t)
+		return eval_tree(list(t))
 
 def eval_tree(node):
 	if isinstance(node, Special):
 		node.args = eval_tree(node.args)
 		return SpecialMethod.apply(node)
+	elif isinstance(node, Func):
+		return node
 	elif isinstance(node, list):
 		return [eval_tree(item) for item in node]
 	return node
