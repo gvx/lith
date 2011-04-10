@@ -1,0 +1,34 @@
+Lith, a minimal data description language
+
+To use this, you need python (tested with 2.6 and 3.1).
+
+USAGE
+
+    python parse_tree.py
+        Parses a tree from stdin, prints it on stdout.
+
+    python eval_tree.py
+        Parses and evaluates a tree from stdin, prints it on stdout.
+
+    python write_tree.py
+        Generates canonicalized Lith source code from source code provided on
+        stdin.
+
+The Python files all contain functions with the same name as their filename,
+with the following profiles:
+
+    tree = parse_tree(text)
+    tree = eval_tree(tree)
+    text = write_tree(tree)
+
+ABOUT LITH
+
+Lith is a minimal description language, built around two core concepts: T
+(true) and [] (lists). An empty list is false, everything else is true.
+
+Numbers are represented by repetitions of T in a list. Thus 3 is [ T T T ].
+
+Strings are represented by lists of numeric codes.
+
+A number of operations can be used on lists or T. They are explained in more
+detail at http://gvxdev.wordpress.com/2011/04/10/lith-revisited/.

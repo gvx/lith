@@ -1,0 +1,22 @@
+[
+  T T T T
+  [
+	T T T T T
+  ]
+  1 7
+  T|T|T|T
+  [[]] #Test comments [T]
+  [11]
+  "Hi"
+]?[TT]
+T:3
+TT:1
+T:[T]
+4:4
+$4
+&10
+&T
+?TT
+!4:$4
+!T:$T
+1 0
