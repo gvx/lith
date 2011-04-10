@@ -70,6 +70,8 @@ class SpecialMethod(object):
 	def subst(self, node):
 		s = node.args[0]
 		t = node.stack
+		if s == 1:
+			s = [1]
 		while True:
 			if s and isinstance(s[0], int):
 				j = s[0]
@@ -81,13 +83,14 @@ class SpecialMethod(object):
 						else: 
 							return 1
 						break
+				else: #fell off
+					return []
 				s = s[1:]
 			else:
 				t = t[0]
-				if s:
-					s = s[0]
-				else:
-					break
+				s = s and s[0]
+			if not s:
+				break
 		if isinstance(t, int):
 			return 1
 		if isinstance(t, Special):
