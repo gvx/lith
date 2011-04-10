@@ -66,6 +66,28 @@ class SpecialMethod(object):
 
 	def flatten(self, node):
 		return [flatten(node.args[0])]
+	
+	def subst(self, node):
+		s = node.args[0]
+		t = node.stack
+		while True:
+			if not s:
+				if isinstance(t[0], int):
+					return 1
+				return t[0]
+			if isinstance(s[0], int):
+				j = s[0]
+				for i in t:
+					j -= i if isinstance(i, int) else 1
+					if j < 0:
+						t = i if isinstance(i, list) else 1
+						break
+				s = s[1:]
+				if not s:
+					return eval_tree(t)
+			else:
+				s = s[0]
+				t = t[0]
 
 def eval_tree(node):
 	if isinstance(node, Special):

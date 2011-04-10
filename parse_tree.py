@@ -12,6 +12,7 @@ class Special(object):
 	def append(self, item):
 		self.args.append(item)
 		self.stack[-2].append(self.stack.pop())
+		self.stack = self.stack[-1]
 	def __getitem__(self, _):
 		pass
 	def __str__(self):
@@ -19,7 +20,7 @@ class Special(object):
 	def __repr__(self):
 		return str(self)
 
-special = {'!': 'head', '$': 'tail', '&': 'length', '?': 'test', ':': 'concat', '_': 'flatten'}
+special = {'!': 'head', '$': 'tail', '&': 'length', '?': 'test', ':': 'concat', '_': 'flatten', '@': 'subst'}
 
 def parse_tree(text):
 	stack = [[]]
