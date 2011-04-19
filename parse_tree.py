@@ -20,10 +20,6 @@ class Special(object):
 	def __repr__(self):
 		return str(self)
 
-class Func(list):
-	def __repr__(self):
-		return 'func'+list.__repr__(self)
-
 special = {'!': 'head', '$': 'tail', '&': 'length', '?': 'test', ':': 'concat', '_': 'flatten', '@': 'subst'}
 
 def parse_tree(text):
@@ -58,9 +54,7 @@ def parse_tree(text):
 				stack[-1].append(1)
 		elif ch == '[': #one level deeper
 			stack.append([])
-		elif ch == '(': #one function deeper
-			stack.append(Func())
-		elif ch in '])': #go back one level
+		elif ch == ']': #go back one level
 			if len(stack) > 1:
 				stack[-2].append(stack.pop())
 			else:

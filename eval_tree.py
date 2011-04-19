@@ -1,6 +1,6 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
-from parse_tree import parse_tree, Special, Func
+from parse_tree import parse_tree, Special
 
 def canon_len(lst):
 	length = 0
@@ -66,7 +66,7 @@ class SpecialMethod(object):
 
 	def flatten(self, node):
 		return [flatten(node.args[0])]
-	
+
 	def subst(self, node):
 		s = node.args[0]
 		t = node.stack
@@ -80,7 +80,7 @@ class SpecialMethod(object):
 					if j < 0:
 						if isinstance(i, list):
 							t = i
-						else: 
+						else:
 							return 1
 						break
 				else: #fell off
@@ -97,14 +97,12 @@ class SpecialMethod(object):
 			if t.name == 'subst': #oops
 				return []
 			return eval_tree(t)
-		return eval_tree(list(t))
+		return eval_tree(t)
 
 def eval_tree(node):
 	if isinstance(node, Special):
 		node.args = eval_tree(node.args)
 		return SpecialMethod.apply(node)
-	elif isinstance(node, Func):
-		return node
 	elif isinstance(node, list):
 		return [eval_tree(item) for item in node]
 	return node
